@@ -1,11 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import bookRouter from "./Routes/Book";
-import nicheRouter from "./Routes/Niche";
-import toneRouter from "./Routes/Tone";
 import userRouter from "./Routes/User";
-import planRouter from "./Routes/Plan";
+import driveRouter from "./Routes/Drive";
 let cors = require("cors");
 
 dotenv.config();
@@ -16,11 +13,8 @@ const db_connection_url = process.env.DB_URL || "";
 
 app.use(express.json());
 app.use(cors());
-app.use("/api/book", bookRouter);
-app.use("/api/niche", nicheRouter);
-app.use("/api/tone", toneRouter);
 app.use("/api/user", userRouter);
-app.use("/api/plan", planRouter);
+app.use("/api/drive", driveRouter);
 
 mongoose.connect(db_connection_url);
 
