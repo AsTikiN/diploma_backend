@@ -5,9 +5,9 @@ const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { price, date, distance, userId } = req.body;
+    const { price, date, distance, userId, path } = req.body;
     const driverId = null;
-    const drive = await Drive.create({ price, date, distance, driverId, userId });
+    const drive = await Drive.create({ price, date, distance, driverId, userId, path });
     return res.status(200).send(drive);
   } catch (e) {
     return res.status(500).send(e);
@@ -44,9 +44,25 @@ router.get("/free", async (req: Request, res: Response) => {
 
 router.put("/:id", async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
-    const { price, date, distance, driverId, userId } = req.body;
-    const drive = await Drive.findByIdAndUpdate(id, { driverId }, { new: true });
+    const _id = req.params.id;
+    const { price, date, distance, driverId, userId, path } = req.body;
+    console.log(price, date, distance, driverId, userId, _id);
+    // const drive = await Drive.findByIdAndUpdate(_id, req.body, { new: true });
+    const drive = await Drive.findByIdAndUpdate(
+      _id,
+      { price, date, distance, driverId, userId, path, _id },
+      { new: true },
+    );
+    return res.status(200).send(drive);
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const _id = req.params.id;
+    const drive = await Drive.findById(_id);
     return res.status(200).send(drive);
   } catch (e) {
     return res.status(500).send(e);

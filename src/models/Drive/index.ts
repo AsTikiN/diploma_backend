@@ -6,6 +6,7 @@ const Drive = new mongoose.Schema({
   distance: String,
   driverId: String || null,
   userId: String,
+  path: String,
 });
 
 export default mongoose.model("Drive", Drive);

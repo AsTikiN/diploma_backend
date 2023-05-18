@@ -23,7 +23,18 @@ router.get("/:email/:password", async (req: Request, res: Response) => {
     if (!email || !password) return res.status(400).send("Email and passoword should be entered!");
     const user = await User.findOne({ email, password });
     if (!user) return res.status(400).send("Incorrect email or passoword");
-    res.status(201).json({ isAuthorized: true, rights: user.rights });
+    res.status(201).json({ isAuthorized: true, rights: user.rights, id: user._id });
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const id: any = req.params.id;
+    const user = await User.findById(id);
+    if (!user) return res.status(400).send("Incorrect data");
+    res.status(201).json(user);
   } catch (e) {
     return res.status(500).send(e);
   }
